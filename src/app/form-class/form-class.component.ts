@@ -70,12 +70,11 @@ export class FormClassComponent implements OnInit {
       })
       this.countAir(air)
       this.countRailway(railway)
-      this.submitDate.emit({RJD: this.railwayFinalPrice, AirFlot: this.airFinalPrice})
+      this.submitDate.emit({'РЖД': this.railwayFinalPrice, 'Аерофлот': this.airFinalPrice})
     }
   }
 
   private countAir(arr: StateRateItem[]) {
-    console.log(arr)
     let price = null;
     arr.forEach((item: StateRateItem) => {
       price = item.price * this.searchForm.value.kilometer;

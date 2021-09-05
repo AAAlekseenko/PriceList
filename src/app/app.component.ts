@@ -11,18 +11,16 @@ export class AppComponent {
     public railwayPriceArray: FinalPriceArray[] = [];
     public airPriceArray: FinalPriceArray[] = [];
 
-    public getArrays(e: any) {
-      console.log(e)
+    public getArrays(array: any) {
       this.railwayPriceArray = [];
       this.airPriceArray = [];
-      for (const arrayItem in e) {
-        e[arrayItem].forEach((item: any) => {
-          if (item.type === RJD) {
-            this.railwayPriceArray.push(item)
+
+      for (const arrayItem in array) {
+          if (arrayItem === RJD) {
+            this.railwayPriceArray = array[arrayItem]
           } else {
-            this.airPriceArray.push(item)
+            this.airPriceArray = array[arrayItem]
           }
-        })
       }
     }
 }
