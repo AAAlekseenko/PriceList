@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FinalPriceArray} from "../interfaces/final-price-array";
+import {AirFlot, RJD} from "../consts/const";
 
 @Component({
   selector: 'app-result-list',
@@ -8,17 +9,22 @@ import {FinalPriceArray} from "../interfaces/final-price-array";
 })
 export class ResultListComponent implements OnChanges{
 
-  @Input() airPriceArray: FinalPriceArray[] = [];
-  @Input() railwayPriceArray: FinalPriceArray[] = [];
+  @Input() finalPriceArray: FinalPriceArray[] = [];
 
-  public airArrayIsEmpty = true;
-  public railwayArrayIsEmpty = true;
+  public airIsEmpty = true;
+  public railwayIsEmpty = true;
+
+  public airArray: FinalPriceArray[] = []
+  public railwayArray: FinalPriceArray[] = []
 
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-      this.airArrayIsEmpty = this.airPriceArray.length ?  false : true
-      this.railwayArrayIsEmpty = this.railwayPriceArray.length ?  false : true
+    if (this.finalPriceArray) {
+      this.airArray = this.finalPriceArray.filter((el) => el.type === AirFlot)
+      this.railwayArray = this.finalPriceArray.filter((el) => el.type === RJD)
+    }
+    this.airIsEmpty = !this.airArray.length;
+    this.railwayIsEmpty = !this.railwayArray.length;
   }
-
 }

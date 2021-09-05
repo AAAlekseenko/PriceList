@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter} from '@angular/core';
 import {FinalPriceArray} from "./interfaces/final-price-array";
 import { RJD } from "./consts/const";
 
@@ -8,19 +8,10 @@ import { RJD } from "./consts/const";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    public railwayPriceArray: FinalPriceArray[] = [];
-    public airPriceArray: FinalPriceArray[] = [];
+
+    public finalPriceArray: FinalPriceArray[] = [];
 
     public getArrays(array: any) {
-      this.railwayPriceArray = [];
-      this.airPriceArray = [];
-
-      for (const arrayItem in array) {
-          if (arrayItem === RJD) {
-            this.railwayPriceArray = array[arrayItem]
-          } else {
-            this.airPriceArray = array[arrayItem]
-          }
-      }
+      this.finalPriceArray = array;
     }
 }
