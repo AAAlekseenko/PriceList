@@ -1,6 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {stateRate} from "./stateRate";
+import {AirFlot, RJD} from "../consts/const";
+import {RateChild} from "../interfaces/rate-child";
+import {StateRateItem} from "../interfaces/state-rate-item";
+import {FinalPriceArray} from "../interfaces/final-price-array";
+import {SetArrayEmit} from "../interfaces/set-array-emit";
 
 @Component({
   selector: 'app-form-class',
@@ -11,12 +16,12 @@ import {stateRate} from "./stateRate";
 export class FormClassComponent implements OnInit {
 
   public searchForm: FormGroup;
-  private suitableTypes: any = [];
+  private suitableTypes: StateRateItem[] = [];
 
-  public airFinalPrice: any = [];
-  public railwayFinalPrice: any = [];
+  public airFinalPrice: FinalPriceArray[] = [];
+  public railwayFinalPrice: FinalPriceArray[] = [];
 
-  @Output() submitDate = new EventEmitter<any>();
+  @Output() submitDate = new EventEmitter<SetArrayEmit>();
 
   constructor() {
     this.searchForm = new FormGroup({
@@ -51,13 +56,13 @@ export class FormClassComponent implements OnInit {
       }
     }
 
-    let railway: any[] = [];
-    let air: any[] = [];
+    let railway: StateRateItem[] = [];
+    let air: StateRateItem[] = [];
 
     if (this.suitableTypes) {
 
-      this.suitableTypes.forEach((item: any) => {
-        if (item.type === 'РЖД') {
+      this.suitableTypes.forEach((item: StateRateItem) => {
+        if (item.type === RJD) {
           railway.push(item)
         } else {
           air.push(item)
@@ -65,13 +70,14 @@ export class FormClassComponent implements OnInit {
       })
       this.countAir(air)
       this.countRailway(railway)
-      this.submitDate.emit({'РЖД': this.railwayFinalPrice, 'Аэрофлот': this.airFinalPrice})
+      this.submitDate.emit({RJD: this.railwayFinalPrice, AirFlot: this.airFinalPrice})
     }
   }
 
-  private countAir(arr: any) {
+  private countAir(arr: StateRateItem[]) {
+    console.log(arr)
     let price = null;
-    arr.forEach((item: any) => {
+    arr.forEach((item: StateRateItem) => {
       price = item.price * this.searchForm.value.kilometer;
       const checkChild = item.child && item.child.age >= this.searchForm.value.age;
 
@@ -81,6 +87,7 @@ export class FormClassComponent implements OnInit {
 
       if (item.luggageBefore) {
         if (item.luggageBefore < this.searchForm.value.weight) {
+          // @ts-ignore
           price += item.luggage;
         }
       }
@@ -94,9 +101,9 @@ export class FormClassComponent implements OnInit {
     })
   }
 
-  private countRailway(arr: any) {
+  private countRailway(arr: StateRateItem[]) {
     let price = null;
-    arr.forEach((item: any) => {
+    arr.forEach((item: StateRateItem) => {
       price = item.price * this.searchForm.value.kilometer;
       const checkChild = item.child && item.child.age >= this.searchForm.value.age;
 
@@ -105,7 +112,7 @@ export class FormClassComponent implements OnInit {
       }
 
       if (item.luggageBefore) {
-        if (item.luggageBefore < this.searchForm.value.weight) {
+        if (item.luggageBefore < this.searchForm.value.weight && item.afterMaxLuggagePrice) {
           price += (this.searchForm.value.weight - item.luggageBefore) * item.afterMaxLuggagePrice
         }
       }
@@ -118,7 +125,7 @@ export class FormClassComponent implements OnInit {
     })
   }
 
-  private static countChildPrice(price: number, child: any): number {
+  private static countChildPrice(price: number, child: RateChild): number {
     return price * ((100 - child.discount) / 100)
   }
 }

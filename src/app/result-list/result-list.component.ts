@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {FinalPriceArray} from "../interfaces/final-price-array";
 
 @Component({
   selector: 'app-result-list',
@@ -7,8 +8,8 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 })
 export class ResultListComponent implements OnChanges{
 
-  @Input() airPriceArray: any = [];
-  @Input() railwayPriceArray: any = [];
+  @Input() airPriceArray: FinalPriceArray[] = [];
+  @Input() railwayPriceArray: FinalPriceArray[] = [];
 
   public airArrayIsEmpty = true;
   public railwayArrayIsEmpty = true;
