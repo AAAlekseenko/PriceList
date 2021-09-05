@@ -1,0 +1,17 @@
+<div class="list-wrapper">
+  <h1 class="list-header">Предложения:</h1>
+  <div class="list-block">
+    <h2 class="block-header">Аерофлот</h2>
+    <div class="list-item"  *ngFor="let item of airPriceArray">
+      {{item.name}}: {{item.price}}
+    </div>
+    <div class="list-item_empty" *ngIf="airArrayIsEmpty">Нет подходящих тарифов</div>
+  </div>
+  <div class="list-block">
+    <h2 class="block-header">РЖД</h2>
+    <div class="list-item" *ngFor="let item of railwayPriceArray">
+      {{item.name}}: {{item.price}}
+    </div>
+    <div class="list-item_empty" *ngIf="railwayArrayIsEmpty">Нет подходящих тарифов</div>
+  </div>
+</div>

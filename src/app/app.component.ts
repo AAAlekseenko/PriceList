@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +6,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'AgentApp2';
+    public railwayPriceArray: any = [];
+    public airPriceArray: any = [];
+
+    public getArrays(e: any) {
+      this.railwayPriceArray = [];
+      this.airPriceArray = [];
+      for (const arrayItem in e) {
+        e[arrayItem].forEach((item: any) => {
+          if (item.type === 'РЖД') {
+            this.railwayPriceArray.push(item)
+          } else {
+            this.airPriceArray.push(item)
+          }
+        })
+      }
+    }
 }

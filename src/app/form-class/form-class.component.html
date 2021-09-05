@@ -1,0 +1,17 @@
+<div class="form-wrapper" >
+  <form class="form" [formGroup]="searchForm" (submit)="submit($event)">
+    <label class="form-label">
+      <div class="form-label__text">Количество километров</div>
+      <input class="form-label__input" type="text" formControlName="kilometer">
+    </label>
+    <label class="form-label">
+      <div class="form-label__text">Возраст</div>
+      <input class="form-label__input" type="text" formControlName="age">
+    </label>
+    <label class="form-label">
+      <div class="form-label__text">Вес багажа</div>
+      <input class="form-label__input" type="text" formControlName="weight">
+    </label>
+    <button class="form-button" (click)="submit($event)">Рассчитать</button>
+  </form>
+</div>
