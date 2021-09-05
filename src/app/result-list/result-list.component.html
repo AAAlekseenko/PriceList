@@ -3,14 +3,14 @@
   <div class="list-block">
     <h2 class="block-header">Аерофлот</h2>
     <div class="list-item"  *ngFor="let item of airArray">
-      {{item.name}}: {{item.price}}
+      {{item.name}}: {{item.price}} &#8381;
     </div>
     <div class="list-item_empty" *ngIf="airIsEmpty">Нет подходящих тарифов</div>
   </div>
   <div class="list-block">
     <h2 class="block-header">РЖД</h2>
     <div class="list-item" *ngFor="let item of railwayArray">
-      {{item.name}}: {{item.price}}
+      {{item.name}}: {{item.price}} &#8381;
     </div>
     <div class="list-item_empty" *ngIf="railwayIsEmpty">Нет подходящих тарифов</div>
   </div>

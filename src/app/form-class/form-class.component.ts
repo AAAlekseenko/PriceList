@@ -2,8 +2,8 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {stateRate} from "./stateRate";
 import {StateRateItem} from "../interfaces/state-rate-item";
-import {SetArrayEmit} from "../interfaces/set-array-emit";
 import {CountPriceService} from "../services/count-price.service";
+import {FinalPriceArray} from "../interfaces/final-price-array";
 
 @Component({
   selector: 'app-form-class',
@@ -15,7 +15,7 @@ import {CountPriceService} from "../services/count-price.service";
 export class FormClassComponent  {
   public searchForm: FormGroup;
 
-  @Output() submitDate = new EventEmitter<SetArrayEmit>();
+  @Output() submitDate = new EventEmitter<FinalPriceArray[]>();
 
   constructor(private countPriceService: CountPriceService) {
     this.searchForm = new FormGroup({
@@ -42,7 +42,8 @@ export class FormClassComponent  {
     }
 
     if (suitableTypes) {
-      this.submitDate.emit(this.countPriceService.countPrice(suitableTypes, this.searchForm.value))
+      const finalCountPriceArray: FinalPriceArray[] = this.countPriceService.countPrice(suitableTypes, this.searchForm.value)
+      this.submitDate.emit(finalCountPriceArray)
     }
   }
 }
