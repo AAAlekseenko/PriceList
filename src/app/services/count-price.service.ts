@@ -3,6 +3,7 @@ import {StateRateItem} from "../interfaces/state-rate-item";
 import {RateChild} from "../interfaces/rate-child";
 import {FinalPriceArray} from "../interfaces/final-price-array";
 import {FormValueInterface} from "../interfaces/form-value";
+import {AirFlot} from "../consts/const";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,6 @@ export class CountPriceService {
   }
 
   countPrice(suitableTypes: StateRateItem[], formValue: FormValueInterface) {
-    console.log(suitableTypes)
     let price = null;
     const finalPriceArray: FinalPriceArray[] = [];
     suitableTypes.forEach((item: StateRateItem) => {
@@ -25,10 +25,10 @@ export class CountPriceService {
       }
 
       if (item.luggageBefore && item.luggageBefore < formValue.weight) {
-        if (item.type === 'Аэрофлот' && (typeof item.luggage !== "boolean" && item.luggage)) {
-          price += item.luggage;
-        } else if (item.afterMaxLuggagePrice && (typeof item.luggageBefore !== "boolean")) {
-          price += (formValue.weight - item.luggageBefore) * item.afterMaxLuggagePrice
+        if (item.type === AirFlot && item.luggage) {
+          price += item.luggage as number;
+        } else if (item.afterMaxLuggagePrice) {
+          price += (formValue.weight - (item.luggageBefore as number)) * item.afterMaxLuggagePrice
         }
       }
 
@@ -40,7 +40,6 @@ export class CountPriceService {
 
       finalPriceArray.push({price: price, type: item.type, name: item.name})
     })
-    console.log(finalPriceArray)
     return finalPriceArray
   }
 

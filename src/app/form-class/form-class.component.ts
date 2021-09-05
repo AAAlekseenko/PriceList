@@ -15,7 +15,7 @@ import {FinalPriceArray} from "../interfaces/final-price-array";
 export class FormClassComponent  {
   public searchForm: FormGroup;
 
-  @Output() submitDate = new EventEmitter<FinalPriceArray[]>();
+  @Output() submitData = new EventEmitter<FinalPriceArray[]>();
 
   constructor(private countPriceService: CountPriceService) {
     this.searchForm = new FormGroup({
@@ -35,7 +35,7 @@ export class FormClassComponent  {
 
     for (const typeRate in stateRate) {
       for (const rate in stateRate[typeRate]) {
-        if (stateRate[typeRate][rate].maxLuggage > this.searchForm.value.weight) {
+        if (stateRate[typeRate][rate].maxLuggage >= this.searchForm.value.weight) {
           suitableTypes.push(stateRate[typeRate][rate])
         }
       }
@@ -43,7 +43,7 @@ export class FormClassComponent  {
 
     if (suitableTypes) {
       const finalCountPriceArray: FinalPriceArray[] = this.countPriceService.countPrice(suitableTypes, this.searchForm.value)
-      this.submitDate.emit(finalCountPriceArray)
+      this.submitData.emit(finalCountPriceArray)
     }
   }
 }
